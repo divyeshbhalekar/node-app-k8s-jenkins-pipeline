@@ -5,6 +5,7 @@ pipeline{
         stage("git checkout"){
             steps{
                 git branch: 'master', credentialsId: 'github_token', url: 'https://github.com/divyeshbhalekar/node-app-k8s-jenkins-pipeline'
+                sh 'ls'
                 echo " ========executing Github checkout/clone repo======== "
             }
         }
