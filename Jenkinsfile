@@ -11,6 +11,7 @@ pipeline{
         }
         stage("Docker Build"){
             steps{
+                echo "====++++executing docker build stage++++===="
                 sh "docker build -t demodockeracc/jenkins-node-k8s-app .:${DOCKER_TAG}"
                 echo "====++++ Docker Build stage completed===="
             }
