@@ -9,11 +9,28 @@ pipeline{
                 echo " ========executing Github checkout/clone repo======== "
             }
         }
-        stage("Docker Build"){
-            steps{
-                echo "====++++executing docker build stage++++===="
-                sh "docker build . -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}"
-                echo "====++++ Docker Build stage completed===="
+        // stage("Docker Build"){
+        //     steps{
+        //         echo "====++++executing docker build stage++++===="
+        //         sh "docker build . -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}"
+        //         echo "====++++ Docker Build stage completed===="
+        //     }
+        // }
+        stage('Docker Build') {
+            steps {
+                echo "====++++Executing Docker Build stage++++===="
+                script {
+                    try {
+                        sh 'docker --version' // Check Docker version
+                        sh 'docker images' // List current Docker images
+                        sh 'docker build . -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}'
+                        echo "====++++ Docker Build stage completed===="
+                    } catch (Exception e) {
+                        echo "Docker build failed: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                        error "Stopping pipeline due to Docker build failure"
+                    }
+                }
             }
         }
         stage("Docker Login"){
