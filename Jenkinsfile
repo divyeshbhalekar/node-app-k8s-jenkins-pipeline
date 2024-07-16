@@ -5,9 +5,6 @@ pipeline{
         dockerImage = ''
         registry = 'demodockeracc/node-app-k8s-jenkins-pipeline'
     }
-    tools {
-        dockerTool 'docker'
-    }
 
     stages{
         stage("git checkout"){
