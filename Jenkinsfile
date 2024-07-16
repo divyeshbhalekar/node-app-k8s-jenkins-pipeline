@@ -14,17 +14,23 @@ pipeline{
                 echo " ========executing Github checkout/clone repo======== "
             }
         }
+        stage("sonarqube analysis"){
+            steps{
+                echo "====++++executing sonarqube analysis===="
+                withSonarQubeEnv('sonarqube-server') {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
 
         stage("Docker Build"){
             steps{
                 echo "Divyesh started docker build"
                 sh "docker build -t demodockeracc/jenkins-node-k8s-app:1  ."
-                echo "====++++ Docker Build stage completed===="
             }
         }
         stage("Docker Login"){
             steps{
-                echo "started docker login"
                 withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', passwordVariable: 'pass', usernameVariable: 'usr')]) {
                 sh "echo ${pass} | docker login -u ${usr} --password-stdin"
             }
@@ -36,5 +42,6 @@ pipeline{
                 echo "Image pushed to Docker hub"
             }
         }
+
     }   
 }
