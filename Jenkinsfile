@@ -25,11 +25,10 @@ pipeline{
         stage("Docker Login"){
             steps{
                 echo "started docker login"
-                withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS')]) {
-                sh "docker login -u demodockeracc -p ${DOCKER_HUB_CREDENTIALS}"
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', passwordVariable: 'pass', usernameVariable: 'usr')]) {
+                sh "echo ${pass} | docker login -u ${usr} --password-stdin"
             }
-         }
-        
+         }       
         }
         stage("Docker Push"){
             steps{
