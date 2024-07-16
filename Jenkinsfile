@@ -6,7 +6,7 @@ pipeline{
         registry = 'demodockeracc/node-app-k8s-jenkins-pipeline'
     }
     tools {
-        docker 'docker'
+        dockerTool 'docker'
     }
 
     stages{
