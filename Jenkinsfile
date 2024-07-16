@@ -29,7 +29,7 @@ pipeline{
         stage("Docker Build"){
             steps{
                 echo "Divyesh started docker build"
-                sh "docker build -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}  ."
+                sh "docker build -t demodockeracc/jenkins-node-k8s-app:1  ."
                 echo "====++++ Docker Build stage completed===="
             }
         }
