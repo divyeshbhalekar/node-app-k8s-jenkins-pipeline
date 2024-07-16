@@ -14,25 +14,25 @@ pipeline{
                 echo " ========executing Github checkout/clone repo======== "
             }
         }
-        stage("Docker Build"){
-            steps{
-                echo "====++++executing Docker Build +++===="
-                script {
-                    dockerImage = docker.build registry
-                }
-            }
-        }
-
-
-
-
         // stage("Docker Build"){
         //     steps{
-        //         echo "====++++executing docker build stage++++===="
-        //         sh "docker build . -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}"
-        //         echo "====++++ Docker Build stage completed===="
+        //         echo "====++++executing Docker Build +++===="
+        //         script {
+        //             dockerImage = docker.build registry
+        //         }
         //     }
         // }
+
+
+
+
+        stage("Docker Build"){
+            steps{
+                echo "Divyesh started docker build"
+                sh "docker build -t demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG}  ."
+                echo "====++++ Docker Build stage completed===="
+            }
+        }
         // stage("Docker Login"){
         //     steps{
         //         echo "started docker login"
