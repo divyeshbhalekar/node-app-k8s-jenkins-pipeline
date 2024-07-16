@@ -14,17 +14,6 @@ pipeline{
                 echo " ========executing Github checkout/clone repo======== "
             }
         }
-        // stage("Docker Build"){
-        //     steps{
-        //         echo "====++++executing Docker Build +++===="
-        //         script {
-        //             dockerImage = docker.build registry
-        //         }
-        //     }
-        // }
-
-
-
 
         stage("Docker Build"){
             steps{
@@ -33,20 +22,20 @@ pipeline{
                 echo "====++++ Docker Build stage completed===="
             }
         }
-        // stage("Docker Login"){
-        //     steps{
-        //         echo "started docker login"
-        //         withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS')]) {
-        //         sh "docker login -u demodockeracc -p ${DOCKER_HUB_CREDENTIALS}"
-        //     }
-        //  }
+        stage("Docker Login"){
+            steps{
+                echo "started docker login"
+                withCredentials([string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS')]) {
+                sh "docker login -u demodockeracc -p ${DOCKER_HUB_CREDENTIALS}"
+            }
+         }
         
-        // }
-        // stage("Docker Push"){
-        //     steps{
-        //         sh "docker push demodockeracc/jenkins-node-k8s-app:${DOCKER_TAG} "
-        //         echo "Image pushed to Docker hub"
-        //     }
-        // }
+        }
+        stage("Docker Push"){
+            steps{
+                sh "docker push demodockeracc/jenkins-node-k8s-app:1 "
+                echo "Image pushed to Docker hub"
+            }
+        }
     }   
 }
