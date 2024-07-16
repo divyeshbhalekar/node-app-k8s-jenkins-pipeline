@@ -5,6 +5,9 @@ pipeline{
         dockerImage = ''
         registry = 'demodockeracc/node-app-k8s-jenkins-pipeline'
     }
+    tools {
+        maven 'mavan-3.9.8'
+    }
 
     stages{
         stage("git checkout"){
